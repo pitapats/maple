@@ -74,7 +74,8 @@
         let requestUrl = apiUrl + '?' + queryString;
         let response = await fetch(requestUrl, {
           headers: {
-            'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
+            //'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
+            'x-nxopen-api-key': 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6'
           }
         });
         let data = await response.json();
