@@ -16,8 +16,7 @@
 
       <div class="remk">
         23.12.21 이후 접속 기록이 있어야 정상 조회 가능 <br/>
-        조회 캐릭 랭킹 정산 이후 본캐/부캐 확인 가능<br/>
-        문의 : [루나] 시삐
+        조회 캐릭 랭킹 정산 이후 본캐/부캐 확인 가능
       </div>
       
       <div class="input-wrap">
@@ -162,6 +161,15 @@
             .catch((error) => console.log(error))
 
             // 인기도
+            fn_mapleApi('/maplestory/v1/user/union', 'date='+_date+'&ocid='+ocid)
+            .then((data) => {
+              //console.log(data)
+              let union_html = `<li>유니온 ${data.union_level}</li>`;
+              document.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', union_html);
+            })
+            .catch((error) => console.log(error))
+
+            // 인기도
             fn_mapleApi('/maplestory/v1/character/popularity', 'date='+_date+'&ocid='+ocid)
             .then((data) => {
               //console.log(data)
@@ -172,12 +180,14 @@
             
 
             // 장착 캐시장비 정보
+            /*
             fn_mapleApi('/maplestory/v1/character/cashitem-equipment', 'date='+_date+'&ocid='+ocid)
             .then((data) => {
               //console.log(data)
               
             })
             .catch((error) => console.log(error))
+            */
             
 
 
