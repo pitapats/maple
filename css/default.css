@@ -11,7 +11,7 @@ ul, ol, li {
 body {
   padding: 20px;
   height: auto;
-  width: 100vw;
+  width: auto;
   box-sizing: border-box;
 }
 

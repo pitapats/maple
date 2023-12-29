@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maplestory Information</title>
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />    
@@ -39,21 +39,16 @@
         </div>
       </div>
       
-      <div class="text-wrap">
-
-      </div>
-
       <div class="stat-wrap">
         <div class="stat_card"></div>
       </div>
 
+      <!--
       <div class="cache-wrap">
-
       </div>
+      -->
 
     </div>
-    
-
     
 
     <script>
@@ -73,8 +68,8 @@
         let requestUrl = apiUrl + '?' + queryString;
         let response = await fetch(requestUrl, {
           headers: {
-            //'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
-            'x-nxopen-api-key': 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6'
+            'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
+            //'x-nxopen-api-key': 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6'
           }
         });
         let data = await response.json();
@@ -86,9 +81,9 @@
         }
       }
 
-      function fn_go(){
+      function fn_go(char_name){
         // char info
-        const character_name = document.querySelector('#char_name_input').value.trim();
+        const character_name = char_name != null ? char_name : document.querySelector('#char_name_input').value.trim();
         if(!character_name){
           return false;
         }
@@ -106,11 +101,12 @@
             reset();
             
             let image_html = `
+              <span class="mark"></span>
               <img src="${data.character_image}" />
             `;          
             let info_html = `
               <ul>
-                <li>${data.character_name}</li>
+                <li data-type="char-name">${data.character_name}<span id="char_type"></span></li>
                 <li>${data.character_class} (${data.character_gender})</li>
                 <li>${data.world_name}
                   ${data.character_guild_name != null 
@@ -128,15 +124,36 @@
             fn_mapleApi('/maplestory/v1/ranking/union', 'date='+_date+'&ocid='+ocid)
             .then((data) => {
               //console.log(data)
-              if(data.ranking.length > 0){
+              if(data.ranking.length > 0){                
                 if(character_name == data.ranking[0].character_name){
-                  document.querySelector('.text-wrap').innerHTML = `<div>본캐입니다. (대표캐릭터)</div>`;
+                  //document.querySelector('.char_info > .image > .mark').textContent = '본캐';
+                  document.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(본캐)</span>`);
+                  char_type
                 } else {
-                  document.querySelector('.text-wrap').innerHTML = `<div>부캐입니다. 본캐 : ${data.ranking[0].character_name}</div>`;
+                  document.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(부캐)</span>`);
+                  document.querySelector('.char_info > .image > .mark').textContent = '본캐 : ' + data.ranking[0].character_name;
                 }
               } else {
-                document.querySelector('.text-wrap').innerHTML = ``;
+                
               }
+            })
+            .catch((error) => console.log(error))
+
+            // 유니온
+            fn_mapleApi('/maplestory/v1/user/union', 'date='+_date+'&ocid='+ocid)
+            .then((data) => {
+              //console.log(data)
+              let union_html = `<li>유니온 ${data.union_level}</li>`;
+              document.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', union_html);
+            })
+            .catch((error) => console.log(error))
+
+            // 인기도
+            fn_mapleApi('/maplestory/v1/character/popularity', 'date='+_date+'&ocid='+ocid)
+            .then((data) => {
+              //console.log(data)
+              let popularity_html = `<li>인기도 ${data.popularity}</li>`;
+              document.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', popularity_html);
             })
             .catch((error) => console.log(error))
 
@@ -159,25 +176,6 @@
               document.querySelector('.stat_card').innerHTML = stat_html;              
             })
             .catch((error) => console.log(error))
-
-            // 인기도
-            fn_mapleApi('/maplestory/v1/user/union', 'date='+_date+'&ocid='+ocid)
-            .then((data) => {
-              //console.log(data)
-              let union_html = `<li>유니온 ${data.union_level}</li>`;
-              document.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', union_html);
-            })
-            .catch((error) => console.log(error))
-
-            // 인기도
-            fn_mapleApi('/maplestory/v1/character/popularity', 'date='+_date+'&ocid='+ocid)
-            .then((data) => {
-              //console.log(data)
-              let popularity_html = `<li>인기도 ${data.popularity}</li>`;
-              document.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', popularity_html);
-            })
-            .catch((error) => console.log(error))
-            
 
             // 장착 캐시장비 정보
             /*
@@ -210,7 +208,6 @@
       function reset(){
         document.querySelector('.char_info > .image').innerHTML = ``;
         document.querySelector('.char_info > .info').innerHTML = ``;
-        document.querySelector('.text-wrap').innerHTML = ``;
         document.querySelector('.stat-wrap > .stat_card').innerHTML = ``;
       }
       
