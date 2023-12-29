@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./css/default.css" />
-    <link rel="stylesheet" href="./css/contents.css" />
+    <link rel="stylesheet" href="./css/default.css?1" />
+    <link rel="stylesheet" href="./css/contents.css?1" />
   </head>
   <body>
     
@@ -68,8 +68,8 @@
         let requestUrl = apiUrl + '?' + queryString;
         let response = await fetch(requestUrl, {
           headers: {
-            'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
-            //'x-nxopen-api-key': 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6'
+            //'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
+            'x-nxopen-api-key': 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6'
           }
         });
         let data = await response.json();
