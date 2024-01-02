@@ -34,3 +34,7 @@ button {
   box-sizing: border-box;
   cursor: pointer;
 }
+
+.dpn {
+  display: none !important;
+}

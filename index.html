@@ -25,28 +25,8 @@
       </div>
       
       <div class="card-wrap">
-        <div class="char_card">
-
-          <div class="char_info">
-            <div class="image">
-            
-            </div>
-            <div class="info">
-
-            </div>
-          </div>
-
-        </div>
+        
       </div>
-      
-      <div class="stat-wrap">
-        <div class="stat_card"></div>
-      </div>
-
-      <!--
-      <div class="cache-wrap">
-      </div>
-      -->
 
     </div>
     
@@ -62,14 +42,16 @@
       var _date = yyyy + '-' + mm + '-' + dd;
       //console.log(_date);
 
+      let ocid = null;
+
       const fn_mapleApi = async function(path, queryString){
         const apiUrl = 'https://open.api.nexon.com' + path;
         
         let requestUrl = apiUrl + '?' + queryString;
         let response = await fetch(requestUrl, {
           headers: {
-            //'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
-            'x-nxopen-api-key': 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6'
+            'x-nxopen-api-key': 'test_9c0da748b4d6c40ab3b3d3258710357e086fc6dacbaa3aba2d497ea29c71951c41fbe26d376d55c810fc973135926f63'
+            //'x-nxopen-api-key': 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6'
           }
         });
         let data = await response.json();
@@ -80,6 +62,14 @@
           throw Error(data);
         }
       }
+
+      function enter(){
+        if(window.event.keyCode == 13){
+          fn_go();
+        }
+      }
+
+      
 
       function fn_go(char_name){
         // char info
@@ -92,125 +82,247 @@
         .then((data) => {
           
           //console.log(data);
-          let ocid = data.ocid; // 캐릭터 고유 키
+          reset();
+
+          ocid = data.ocid; // 캐릭터 고유 키
           
-          // 기본정보
-          fn_mapleApi('/maplestory/v1/character/basic', 'date='+_date+'&ocid='+ocid)
-          .then((data) => {
-            
-            reset();
-            
-            let image_html = `
-              <span class="mark"></span>
-              <img src="${data.character_image}" />
-            `;          
-            let info_html = `
-              <ul>
-                <li data-type="char-name">${data.character_name}<span id="char_type"></span></li>
-                <li>${data.character_class} (${data.character_gender})</li>
-                <li>${data.world_name}
-                  ${data.character_guild_name != null 
-                    ? `/ ${data.character_guild_name}` : ``
-                  }
-                  </li>
-                <li>Lv.${data.character_level} (${data.character_exp_rate}%)</li>
-              </ul>
-            `;
-
-            document.querySelector('.char_info > .image').innerHTML = image_html;
-            document.querySelector('.char_info > .info').innerHTML = info_html;
-
-            // 대표캐릭터 확인차 랭킹 체크
-            fn_mapleApi('/maplestory/v1/ranking/union', 'date='+_date+'&ocid='+ocid)
-            .then((data) => {
-              //console.log(data)
-              if(data.ranking.length > 0){                
-                if(character_name == data.ranking[0].character_name){
-                  //document.querySelector('.char_info > .image > .mark').textContent = '본캐';
-                  document.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(본캐)</span>`);
-                  char_type
-                } else {
-                  document.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(부캐)</span>`);
-                  document.querySelector('.char_info > .image > .mark').textContent = '본캐 : ' + data.ranking[0].character_name;
-                }
-              } else {
-                
-              }
-            })
-            .catch((error) => console.log(error))
-
-            // 유니온
-            fn_mapleApi('/maplestory/v1/user/union', 'date='+_date+'&ocid='+ocid)
-            .then((data) => {
-              //console.log(data)
-              let union_html = `<li>유니온 ${data.union_level}</li>`;
-              document.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', union_html);
-            })
-            .catch((error) => console.log(error))
-
-            // 인기도
-            fn_mapleApi('/maplestory/v1/character/popularity', 'date='+_date+'&ocid='+ocid)
-            .then((data) => {
-              //console.log(data)
-              let popularity_html = `<li>인기도 ${data.popularity}</li>`;
-              document.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', popularity_html);
-            })
-            .catch((error) => console.log(error))
-
-            // 스탯 확인
-            fn_mapleApi('/maplestory/v1/character/stat', 'date='+_date+'&ocid='+ocid)
-            .then((data) => {
-              //console.log(data)
-              let stat = data.final_stat;              
-              let stat_html = '';
-              stat.forEach((s) => {
-                //console.log(s)
-                stat_html += `
-                  <div>
-                    <span>${s.stat_name}</span>
-                    <span>${s.stat_value}</span>
-                  </div>
-                `;
-              });
-
-              document.querySelector('.stat_card').innerHTML = stat_html;              
-            })
-            .catch((error) => console.log(error))
-
-            // 장착 캐시장비 정보
-            /*
-            fn_mapleApi('/maplestory/v1/character/cashitem-equipment', 'date='+_date+'&ocid='+ocid)
-            .then((data) => {
-              //console.log(data)
+          fn_getInfo(ocid); // 제일 먼저 조회 필수
+          let si = setInterval(function(){
+            if(document.querySelector('div[data-ocid="'+ocid+'"]') != null){
               
-            })
-            .catch((error) => console.log(error))
-            */
-            
+              // info
+              fn_getCharType(ocid, character_name);
+              fn_getUinonLev(ocid);
+              fn_getPopular(ocid);
+              fn_getDojang(ocid);
+
+              fn_getCacheItem(ocid);
+
+              // stat
+              fn_getStat(ocid);
 
 
-          })
-          .catch((error) => console.log(error))
-      })
-      .catch((error) => {
-        console.log(error);
-        alert('23.12.21 이후 접속 정보 없음');
-      });
+
+              clearInterval(si);
+            }
+          }, 100);
+          
+        })
+        .catch((error) => {
+          console.log(error);
+          alert('23.12.21 이후 접속 정보 없음');
+        });
       }
       fn_go();
 
-      function enter(){
-        if(window.event.keyCode == 13){
-          fn_go();
+      function reset(){
+        document.querySelector('.card-wrap').innerHTML = ``;
+      }
+
+      // 기본정보
+      let fn_getInfo = function(ocid){
+          fn_mapleApi('/maplestory/v1/character/basic', 'date='+_date+'&ocid='+ocid)
+          .then((data) => {
+            //console.log(data);
+            let char_html = `
+              <div class="char_card" data-ocid="${ocid}">
+                <div class="char_info">                  
+                  <div class="image">
+                    <span class="mark"></span>
+                    <img src="${data.character_image}" />
+                  </div>                  
+                  <div class="info">
+                    <ul>
+                      <li data-type="char-server">${data.world_name}
+                        ${data.character_guild_name != null 
+                          ? ` <${data.character_guild_name}>` : ``
+                        }
+                        </li>
+                      <li data-type="char-name">${data.character_name}<span id="char_type"></span></li>
+                      <li>${data.character_class} (${data.character_gender})</li>                      
+                      <li>Lv.${data.character_level} (${data.character_exp_rate}%)</li>
+                      <li data-type="char-union"></li>
+                      <li data-type="char-popular"></li>
+                      <li data-type="char-dojang"></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="char_cache_item dpn"></div>
+                <div class="char_stat dpn"></div>
+              </div>
+            `;
+            document.querySelector('.card-wrap').innerHTML = char_html;
+          })
+          .catch((error) => console.log(error))
+      }
+      
+      // 대표캐릭터 확인차 랭킹 체크
+      let fn_getCharType = function(ocid, character_name){        
+        fn_mapleApi('/maplestory/v1/ranking/union', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          if(data.ranking.length > 0){
+            //console.log(card)
+            if(character_name == data.ranking[0].character_name){
+              //document.querySelector('.char_info > .image > .mark').textContent = '본캐';
+              card.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(본캐)</span>`);
+              char_type
+            } else {
+              card.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(부캐)</span>`);
+              card.querySelector('.char_info > .image > .mark').textContent = '본캐 : ' + data.ranking[0].character_name;
+            }
+          } else {
+            //
+          }
+        })
+        .catch((error) => console.log(error))
+      }
+
+      // 유니온 총 레벨
+      let fn_getUinonLev = function(ocid){
+        fn_mapleApi('/maplestory/v1/user/union', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          //let union_html = `<li>유니온 ${data.union_level}</li>`;
+          //card.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', union_html);
+          card.querySelector('li[data-type="char-union"]').textContent = `유니온 ${data.union_level}`;
+        })
+        .catch((error) => console.log(error))
+      }
+
+      // 인기도
+      let fn_getPopular = function(ocid){
+        fn_mapleApi('/maplestory/v1/character/popularity', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          //let popularity_html = `<li>인기도 ${data.popularity}</li>`;
+          //card.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', popularity_html);
+          card.querySelector('li[data-type="char-popular"]').textContent = `인기도 ${data.popularity}`;
+        })
+        .catch((error) => console.log(error))
+      }
+
+      // 무릉도장
+      let fn_getDojang = function(ocid){
+        fn_mapleApi('/maplestory/v1/character/dojang', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          //let dojang_html = `<li>무릉도장 ${data.dojang_best_floor}층</li>`; // date_dojang_record
+          //card.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', dojang_html);
+          card.querySelector('li[data-type="char-dojang"]').textContent = `무릉도장 ${data.dojang_best_floor}층`;
+        })
+        .catch((error) => console.log(error))
+      }
+
+      // 스탯 확인
+      let fn_getStat = function(ocid){
+        fn_mapleApi('/maplestory/v1/character/stat', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          let stat_original = data.final_stat;
+          let stat_mainlist = [
+            '최소 스탯공격력', '최대 스탯공격력', '보스 몬스터 데미지', '방어율 무시', '최종 데미지',
+            '크리티컬 확률', '크리티컬 데미지', 'STR', 'DEX', 'INT', 'LUK',
+            '아이템 드롭률', '메소 획득량', '전투력'
+          ];
+
+          let html = '';
+          let main_html = '';
+          let stat_html = '';
+          stat_original.forEach((s) => {
+            //console.log(s)
+            let s_name = s.stat_name;
+            let s_value = Number(s.stat_value).toLocaleString('ko-KR');
+
+            if(stat_mainlist.indexOf(s_name) > -1){
+              main_html += `
+                <div>
+                  <span>${s_name}</span>
+                  <span>${s_value}</span>
+                </div>
+              `;
+            }
+            stat_html += `
+              <div>
+                <span>${s_name}</span>
+                <span>${s_value}</span>
+              </div>
+            `;
+          });
+
+          html = `            
+            <div class="list" data-type="main">
+              ${main_html}
+            </div>
+            <div class="list dpn" data-type="all">
+              ${stat_html}
+            </div>
+            <div>
+              <button onclick="fn_statEvent('${ocid}');">상세히 보기</button>
+            </div>
+          `;
+
+          card.querySelector('.char_stat').innerHTML = `
+            <div class="sub_title">캐릭터 스탯</div>
+            ${html}
+          `;
+          card.querySelector('.char_stat').classList.remove('dpn');
+        })
+        .catch((error) => console.log(error))
+      }
+
+      let fn_statEvent = function(ocid){
+        const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+        card.querySelector('.char_stat > .list[data-type="main"]').classList.toggle('dpn');
+        card.querySelector('.char_stat > .list[data-type="all"]').classList.toggle('dpn');
+        if(card.querySelector('.char_stat > .list[data-type="main"]').classList.contains('dpn')){
+          card.querySelector('.char_stat button').textContent = '간략히 보기';
+        } else {
+          card.querySelector('.char_stat button').textContent = '상세히 보기';
         }
       }
 
-      function reset(){
-        document.querySelector('.char_info > .image').innerHTML = ``;
-        document.querySelector('.char_info > .info').innerHTML = ``;
-        document.querySelector('.stat-wrap > .stat_card').innerHTML = ``;
+      // 장착 캐시장비 정보
+      let fn_getCacheItem = function(){
+        fn_mapleApi('/maplestory/v1/character/cashitem-equipment', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data);
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          // 현재 프리셋 번호
+          let preset_no = data.preset_no;
+          if(data['cash_item_equipment_preset_'+preset_no] != null){
+            let cache_list = data['cash_item_equipment_preset_'+preset_no];
+            let html = '';
+            cache_list.forEach((item) => {
+              //console.log(item)
+              html += `
+                <div>
+                  <span>${item.cash_item_equipment_part}</span>
+                  <span title="${item.cash_item_description != null ? ` ${item.cash_item_description}` : ``}">
+                    <img src="${item.cash_item_icon}">${item.cash_item_name}
+                  </span>
+                </div>
+              `;
+
+              card.querySelector('.char_cache_item').innerHTML = `
+                <div class="sub_title">장착 중인 캐시 장비</div>
+                ${html}
+              `;
+              card.querySelector('.char_cache_item').classList.remove('dpn');
+            });
+          }
+        })
+        .catch((error) => console.log(error))
       }
-      
+
+
+
     </script>
   </body>
 </html>

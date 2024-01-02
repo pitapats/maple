@@ -25,7 +25,8 @@
   }
   .char_card {
     width: 100%;
-    height: 150px;
+    height: auto;
+    min-height: 150px;
     border: 1px solid #cccccc;
     color: #444444;
     box-shadow: 0 3px 2px rgba(0,0,0,0.1);
@@ -43,6 +44,8 @@
     align-items: center;
     column-gap: 20px;
     width: 100%;
+    position: relative;
+    margin-top: 25px;
   }
 
   .char_info > .image {
@@ -55,15 +58,21 @@
   .char_info > .image .mark {
     position: absolute;
     display: inline-block;
-    left: 5px;
-    bottom: -18px;
-    font-size: 12px;
+    left: 0;
+    bottom: -14px;
+    font-size: 11px;
   }
 
   .char_info ul {
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+  }
+  .char_info ul li[data-type="char-server"] {
+    position: absolute;
+    left: 0;
+    top: -22px;
+    font-weight: 600;
   }
   .char_info ul li[data-type="char-name"] {
     font-weight: 800;
@@ -73,22 +82,72 @@
     font-weight: 500;
     margin-left: 3px;
   }
-  
-  .stat_card {
+
+  .sub_title {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    align-items: baseline !important;
+    margin-bottom: 10px !important;
+  }
+
+  .char_cache_item {
+    width: 100%;
+    border-top: 1px solid #cccccc;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  .char_cache_item > div {
     width: 100%;
     height: auto;
-    border: 1px solid #cccccc;
     color: #444444;
-    box-shadow: 0 3px 2px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .char_cache_item > div:last-child {
+    margin-bottom: 0;
+  }
+  .char_cache_item > div > span:first-child {
+    width: 50px;
+    min-width: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 10px;
+    border-right: 1px solid #cccccc;
+  }
+  .char_cache_item > div > span+span {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 5px;
+  }
+  .char_stat {
+    width: 100%;
+    border-top: 1px solid #cccccc;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  .char_stat > div:last-child {
+    margin-top: 5px;
+  }
+  .char_stat > div:last-child button {
+    width: 100px;
+    height: 20px;
+    border: 0;
+    background-color: #ffffff;
+  }
+  .char_stat > div {
+    width: 100%;
+    height: auto;
+    color: #444444;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .stat_card > div {
+  .char_stat > .list > div {
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
