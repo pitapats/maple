@@ -21,7 +21,7 @@
       
       <div class="input-wrap">
         <input type="text" id="char_name_input" value="시삐" onkeyup="enter();">
-        <button onclick="fn_go();"><i class="fas fa-search"></i></button>
+        <button onclick="fn_search();"><i class="fas fa-search"></i></button>
       </div>
       
       <div class="card-wrap">
@@ -42,7 +42,7 @@
       var _date = yyyy + '-' + mm + '-' + dd;
       //console.log(_date);
 
-      let ocid = null;
+      let current_ocid = null;
 
       const fn_mapleApi = async function(path, queryString){
         const apiUrl = 'https://open.api.nexon.com' + path;
@@ -53,6 +53,8 @@
           // real
           apiKey = 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6';
         }
+
+        apiKey = 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6';
         
         let requestUrl = apiUrl + '?' + queryString;
         let response = await fetch(requestUrl, {
@@ -71,13 +73,11 @@
 
       function enter(){
         if(window.event.keyCode == 13){
-          fn_go();
+          fn_search();
         }
       }
 
-      
-
-      function fn_go(char_name){
+      function fn_search(char_name){
         // char info
         const character_name = char_name != null ? char_name : document.querySelector('#char_name_input').value.trim();
         if(!character_name){
@@ -90,24 +90,22 @@
           //console.log(data);
           reset();
 
-          ocid = data.ocid; // 캐릭터 고유 키
+          current_ocid = data.ocid; // 현재 조회 캐릭터 고유 키 저장
           
-          fn_getInfo(ocid); // 제일 먼저 조회 필수
+          fn_getInfo(data.ocid); // 제일 먼저 조회 필수
           let si = setInterval(function(){
-            if(document.querySelector('div[data-ocid="'+ocid+'"]') != null){
+            if(document.querySelector('div[data-ocid="'+data.ocid+'"]') != null){
               
               // info
-              fn_getCharType(ocid, character_name);
-              fn_getUinonLev(ocid);
-              fn_getPopular(ocid);
-              fn_getDojang(ocid);
+              fn_getCharType(data.ocid, character_name);
+              fn_getUinonLev(data.ocid);
+              fn_getPopular(data.ocid);
+              fn_getDojang(data.ocid);
 
-              fn_getCacheItem(ocid);
+              //fn_getCacheItem(data.ocid);
 
               // stat
-              fn_getStat(ocid);
-
-
+              //fn_getStat(data.ocid);
 
               clearInterval(si);
             }
@@ -119,7 +117,7 @@
           alert('23.12.21 이후 접속 정보 없음');
         });
       }
-      fn_go();
+      fn_search();
 
       function reset(){
         document.querySelector('.card-wrap').innerHTML = ``;
@@ -127,40 +125,53 @@
 
       // 기본정보
       let fn_getInfo = function(ocid){
-          fn_mapleApi('/maplestory/v1/character/basic', 'date='+_date+'&ocid='+ocid)
-          .then((data) => {
-            //console.log(data);
-            let char_html = `
-              <div class="char_card" data-ocid="${ocid}">
-                <div class="char_info">                  
-                  <div class="image">
-                    <span class="mark"></span>
-                    <img src="${data.character_image}" />
-                  </div>                  
-                  <div class="info">
-                    <ul>
-                      <li data-type="char-server">${data.world_name}
-                        ${data.character_guild_name != null 
-                          ? ` <${data.character_guild_name}>` : ``
-                        }
-                        </li>
-                      <li data-type="char-name">${data.character_name}<span id="char_type"></span></li>
-                      <li>${data.character_class} (${data.character_gender})</li>                      
-                      <li>Lv.${data.character_level} (${data.character_exp_rate}%)</li>
-                      <li data-type="char-union"></li>
-                      <li data-type="char-popular"></li>
-                      <li data-type="char-dojang"></li>
-                    </ul>
-                  </div>
+        fn_mapleApi('/maplestory/v1/character/basic', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data);
+          let char_html = `
+            <div class="char_card" data-ocid="${ocid}">
+              <div class="char_info">                  
+                <div class="image">
+                  <span class="mark"></span>
+                  <img src="${data.character_image}" />
+                </div>                  
+                <div class="info">
+                  <ul>
+                    <li data-type="char-server">${data.world_name}</li>
+                    <li data-type="char-name">${data.character_name}<span id="char_type"></span></li>
+                    <li>${data.character_class} (${data.character_gender})</li>                      
+                    <li>Lv.${data.character_level} (${data.character_exp_rate}%)</li>
+                    <li data-type="char-union"></li>
+                    <li data-type="char-popular"></li>
+                    <li data-type="char-dojang"></li>
+                  </ul>
                 </div>
-
-                <div class="char_cache_item dpn"></div>
-                <div class="char_stat dpn"></div>
               </div>
-            `;
-            document.querySelector('.card-wrap').innerHTML = char_html;
-          })
-          .catch((error) => console.log(error))
+
+              <div class="sub_title char_guild_title" onclick="fn_menuToggle(this);">길드 정보<i class="fas fa-angle-down"></i></div>
+              <div class="sub_menu char_guild dpn"></div>
+
+              <div class="sub_title" onclick="fn_getCacheItem(); fn_menuToggle(this);">장착 중인 캐시 장비<i class="fas fa-angle-down"></i></div>
+              <div class="sub_menu char_cache_item dpn"></div>
+              
+              <div class="sub_title" onclick="fn_getStat(); fn_menuToggle(this);">캐릭터 스탯<i class="fas fa-angle-down"></i></div>
+              <div class="sub_menu char_stat dpn"></div>
+
+              <div class="sub_title" onclick="fn_getUnionraider(); fn_menuToggle(this);">유니온 공격대<i class="fas fa-angle-down"></i></div>
+              <div class="sub_menu char_unionraider dpn"></div>
+            </div>
+          `;
+          document.querySelector('.card-wrap').innerHTML = char_html;
+
+          // 현재 캐릭터의 길드 조회
+          if(data.character_guild_name){
+            document.querySelector('.char_guild_title').classList.remove('dpn');
+            fn_getGuild(data.world_name, data.character_guild_name);
+          } else {
+            document.querySelector('.char_guild_title').classList.add('dpn');
+          }
+        })
+        .catch((error) => console.log(error))
       }
       
       // 대표캐릭터 확인차 랭킹 체크
@@ -225,8 +236,132 @@
         .catch((error) => console.log(error))
       }
 
+      let fn_menuToggle = function(obj){
+        //console.log(obj)
+        if(obj.querySelector('i').classList.contains('fa-angle-down')){
+          // down  이 있으면 up 으로 변경
+          obj.querySelector('i').classList.add('fa-angle-up');
+          obj.querySelector('i').classList.remove('fa-angle-down');
+          obj.nextElementSibling.classList.remove('dpn');
+        } else {
+          obj.querySelector('i').classList.add('fa-angle-down');
+          obj.querySelector('i').classList.remove('fa-angle-up');
+          obj.nextElementSibling.classList.add('dpn');
+        }
+      }
+
+      // 현재 길드 정보
+      let fn_getGuild = function(world_name, guild_name){
+        // 처음에 길드가 있는 경우 자동 조회하며, 클릭 시에는 미조회
+        if(document.querySelector('.char_guild').getInnerHTML() != ''){
+          return false;
+        }
+
+        fn_mapleApi('/maplestory/v1/guild/id', 'world_name='+world_name+'&guild_name='+guild_name)
+        .then((data) => {
+          //console.log(data);
+          fn_mapleApi('/maplestory/v1/guild/basic', 'date='+_date+'&oguild_id='+data.oguild_id)
+          .then((data) => {
+            //console.log(data);
+            const card = document.querySelector('div[data-ocid="'+current_ocid+'"]');
+
+            let skill_html = '';
+            data.guild_noblesse_skill.forEach((skill) => {
+              skill_html += `
+                <div>
+                  <img src="${skill.skill_icon}" title="${skill.skill_name} - ${skill.skill_effect}" />
+                  <span>Lv.${skill.skill_level}</span>
+                </div>
+              `;
+            });
+
+            // 길드마크 커스텀..?
+            //guild_mark_custom
+
+            let html = `
+              <div>
+                <div class="guild_sub_title">주요 정보</div>
+                <div class="guild_info">
+                  <span>                    
+                    <span>길드</span>
+                    <span>${data.guild_name} (Lv.${data.guild_level})</span>
+                  </span>
+                  <span>
+                    <span>마스터</span>
+                    <span>${data.guild_master_name}</span>
+                  </span>
+                  <span>
+                    <span>인원수</span>
+                    <span>${data.guild_member_count}명</span>
+                  </span>
+                </div>
+                ${skill_html != '' 
+                ? `<div class="guild_sub_title">노블 스킬</div>
+                   <div class="guild_nobless_skill">
+                     ${skill_html}
+                   </div>
+                  `: `` }
+              </div>
+            `;
+
+            card.querySelector('.char_guild').insertAdjacentHTML('beforeend', html);
+
+            document.querySelector('.char_guild_title').classList.remove('dpn');
+            card.querySelector('.char_guild_title').click();
+          })
+          .catch((error) => console.log(error))
+        })
+        .catch((error) => console.log(error))
+      }
+
+      // 장착 캐시장비 정보
+      let fn_getCacheItem = function(ocid){
+        // 데이터 조회했으면 더 이상 조회 X
+        if(!ocid){
+          ocid = current_ocid;
+        }
+        if(document.querySelector('div[data-ocid="'+ocid+'"] .char_cache_item').getInnerHTML() != ''){
+          return false;
+        }
+
+        fn_mapleApi('/maplestory/v1/character/cashitem-equipment', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data);
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          // 현재 프리셋 번호
+          let preset_no = data.preset_no;
+          if(data['cash_item_equipment_preset_'+preset_no] != null){
+            let cache_list = data['cash_item_equipment_preset_'+preset_no];
+            let html = '';
+            cache_list.forEach((item) => {
+              //console.log(item)
+              html += `
+                <div>
+                  <span>${item.cash_item_equipment_part}</span>
+                  <span title="${item.cash_item_description != null ? ` ${item.cash_item_description}` : ``}">
+                    <img src="${item.cash_item_icon}">${item.cash_item_name}
+                  </span>
+                </div>
+              `;
+            });
+
+            card.querySelector('.char_cache_item').insertAdjacentHTML('beforeend', html);
+            card.querySelector('.char_cache_item').classList.remove('dpn');
+          }
+        })
+        .catch((error) => console.log(error))
+      }
+
       // 스탯 확인
       let fn_getStat = function(ocid){
+        // 데이터 조회했으면 더 이상 조회 X
+        if(!ocid){
+          ocid = current_ocid;
+        }
+        if(document.querySelector('div[data-ocid="'+ocid+'"] .char_stat').getInnerHTML() != ''){
+          return false;
+        }
+
         fn_mapleApi('/maplestory/v1/character/stat', 'date='+_date+'&ocid='+ocid)
         .then((data) => {
           //console.log(data)
@@ -274,10 +409,7 @@
             </div>
           `;
 
-          card.querySelector('.char_stat').innerHTML = `
-            <div class="sub_title">캐릭터 스탯</div>
-            ${html}
-          `;
+          card.querySelector('.char_stat').insertAdjacentHTML('beforeend', html);
           card.querySelector('.char_stat').classList.remove('dpn');
         })
         .catch((error) => console.log(error))
@@ -294,38 +426,59 @@
         }
       }
 
-      // 장착 캐시장비 정보
-      let fn_getCacheItem = function(){
-        fn_mapleApi('/maplestory/v1/character/cashitem-equipment', 'date='+_date+'&ocid='+ocid)
-        .then((data) => {
-          //console.log(data);
-          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
-          // 현재 프리셋 번호
-          let preset_no = data.preset_no;
-          if(data['cash_item_equipment_preset_'+preset_no] != null){
-            let cache_list = data['cash_item_equipment_preset_'+preset_no];
-            let html = '';
-            cache_list.forEach((item) => {
-              //console.log(item)
-              html += `
-                <div>
-                  <span>${item.cash_item_equipment_part}</span>
-                  <span title="${item.cash_item_description != null ? ` ${item.cash_item_description}` : ``}">
-                    <img src="${item.cash_item_icon}">${item.cash_item_name}
-                  </span>
-                </div>
-              `;
+      let fn_getUnionraider = function(ocid){
+        // 데이터 조회했으면 더 이상 조회 X
+        if(!ocid){
+          ocid = current_ocid;
+        }
+        if(document.querySelector('div[data-ocid="'+ocid+'"] .char_unionraider').getInnerHTML() != ''){
+          return false;
+        }
 
-              card.querySelector('.char_cache_item').innerHTML = `
-                <div class="sub_title">장착 중인 캐시 장비</div>
-                ${html}
-              `;
-              card.querySelector('.char_cache_item').classList.remove('dpn');
-            });
-          }
+        fn_mapleApi('/maplestory/v1/user/union-raider', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {          
+          console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+
+          // union_occupied_stat 유니온 점령 효과
+          // union_raider_stat 유니온 공격대원 효과
+          let occupied_html = '';
+          let raider_html = '';
+
+          let occupied = data.union_occupied_stat.sort();
+          occupied.forEach((union) => {
+            occupied_html += `
+              <span>${union}</span>
+            `;
+          });
+
+          let raider = data.union_raider_stat.sort();
+          raider.forEach((union) => {
+            raider_html += `
+              <span>${union}</span>
+            `;
+          });
+
+          let html = `
+              <div>
+                <div class="union_sub_title">유니온 점령효과</div>
+                <div class="union_info">
+                  ${occupied_html}
+                </div>
+                <div class="union_sub_title">유니온 공격대원 효과</div>
+                <div class="union_info">
+                  ${raider_html}
+                </div>
+              </div>
+            `;
+
+            card.querySelector('.char_unionraider').insertAdjacentHTML('beforeend', html);
+            card.querySelector('.char_unionraider').classList.remove('dpn');
         })
         .catch((error) => console.log(error))
       }
+
+      
 
 
 
