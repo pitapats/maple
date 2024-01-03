@@ -179,8 +179,9 @@
 }
 .equip-detail {
   flex-direction: column;
-    border: 1px solid #cccccc;
+    border: 1px solid #cecece;
     border-radius: 10px;
+    padding: 7px 5px;
 }
 .equip-detail > div {
  display: flex;
@@ -214,7 +215,10 @@
 .char_ability > div > span:nth-child(n+2) {
   padding: 5px;
   font-size: 12px;
-  border-radius: 5px;
+}
+.char_ability > div > span[data-grade] {
+  border: 1px solid #cccccc;
+  margin-bottom: 5px;
 }
 .char_ability > div > span[data-grade="1"] {
   background-color: #6dff3f1a;
