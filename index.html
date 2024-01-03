@@ -53,8 +53,6 @@
           // real
           apiKey = 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6';
         }
-
-        apiKey = 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6';
         
         let requestUrl = apiUrl + '?' + queryString;
         let response = await fetch(requestUrl, {
@@ -151,14 +149,21 @@
               <div class="sub_title char_guild_title" onclick="fn_menuToggle(this);">길드 정보<i class="fas fa-angle-down"></i></div>
               <div class="sub_menu char_guild dpn"></div>
 
-              <div class="sub_title" onclick="fn_getCacheItem(); fn_menuToggle(this);">장착 중인 캐시 장비<i class="fas fa-angle-down"></i></div>
-              <div class="sub_menu char_cache_item dpn"></div>
-              
-              <div class="sub_title" onclick="fn_getStat(); fn_menuToggle(this);">캐릭터 스탯<i class="fas fa-angle-down"></i></div>
+              <div class="sub_title" onclick="fn_getStat(); fn_menuToggle(this);">스탯<i class="fas fa-angle-down"></i></div>
               <div class="sub_menu char_stat dpn"></div>
+              
+              <div class="sub_title" onclick="fn_getAbility(); fn_menuToggle(this);">어빌리티<i class="fas fa-angle-down"></i></div>
+              <div class="sub_menu char_ability dpn"></div>
 
               <div class="sub_title" onclick="fn_getUnionraider(); fn_menuToggle(this);">유니온 공격대<i class="fas fa-angle-down"></i></div>
               <div class="sub_menu char_unionraider dpn"></div>
+
+              <div class="sub_title" onclick="fn_getEquipment(); fn_menuToggle(this);">장착 중인 장비<i class="fas fa-angle-down"></i></div>
+              <div class="sub_menu char_equipment dpn"></div>
+
+              <div class="sub_title" onclick="fn_getCacheItem(); fn_menuToggle(this);">장착 중인 캐시 장비<i class="fas fa-angle-down"></i></div>
+              <div class="sub_menu char_cache_item dpn"></div>
+              
             </div>
           `;
           document.querySelector('.card-wrap').innerHTML = char_html;
@@ -314,44 +319,6 @@
         .catch((error) => console.log(error))
       }
 
-      // 장착 캐시장비 정보
-      let fn_getCacheItem = function(ocid){
-        // 데이터 조회했으면 더 이상 조회 X
-        if(!ocid){
-          ocid = current_ocid;
-        }
-        if(document.querySelector('div[data-ocid="'+ocid+'"] .char_cache_item').getInnerHTML() != ''){
-          return false;
-        }
-
-        fn_mapleApi('/maplestory/v1/character/cashitem-equipment', 'date='+_date+'&ocid='+ocid)
-        .then((data) => {
-          //console.log(data);
-          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
-          // 현재 프리셋 번호
-          let preset_no = data.preset_no;
-          if(data['cash_item_equipment_preset_'+preset_no] != null){
-            let cache_list = data['cash_item_equipment_preset_'+preset_no];
-            let html = '';
-            cache_list.forEach((item) => {
-              //console.log(item)
-              html += `
-                <div>
-                  <span>${item.cash_item_equipment_part}</span>
-                  <span title="${item.cash_item_description != null ? ` ${item.cash_item_description}` : ``}">
-                    <img src="${item.cash_item_icon}">${item.cash_item_name}
-                  </span>
-                </div>
-              `;
-            });
-
-            card.querySelector('.char_cache_item').insertAdjacentHTML('beforeend', html);
-            card.querySelector('.char_cache_item').classList.remove('dpn');
-          }
-        })
-        .catch((error) => console.log(error))
-      }
-
       // 스탯 확인
       let fn_getStat = function(ocid){
         // 데이터 조회했으면 더 이상 조회 X
@@ -415,6 +382,48 @@
         .catch((error) => console.log(error))
       }
 
+      let fn_getAbility = function(ocid){
+        // 데이터 조회했으면 더 이상 조회 X
+        if(!ocid){
+          ocid = current_ocid;
+        }
+        if(document.querySelector('div[data-ocid="'+ocid+'"] .char_ability').getInnerHTML() != ''){
+          return false;
+        }
+
+        fn_mapleApi('/maplestory/v1/character/ability', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          
+          let html = `
+            <div>
+              <span>등급</span>
+              <span>${data.ability_grade}</span>
+            </div>
+            <div>
+              <span>옵션</span>
+          `;
+
+          data.ability_info.forEach((ability) => {
+            html += `
+                <span data-grade="${ability.ability_grade}">${ability.ability_value}</span>
+            `;
+          });
+
+          html += `</div>`;
+
+          html = html.replaceAll('data-grade="레전드리"', 'data-grade="1"')
+                          .replaceAll('data-grade="유니크"', 'data-grade="2"')
+                          .replaceAll('data-grade="에픽"', 'data-grade="3"')
+                          .replaceAll('data-grade="레어"', 'data-grade="4"')
+
+          card.querySelector('.char_ability').insertAdjacentHTML('beforeend', html);
+          card.querySelector('.char_ability').classList.remove('dpn');
+        })
+        .catch((error) => console.log(error))
+      }
+
       let fn_statEvent = function(ocid){
         const card = document.querySelector('div[data-ocid="'+ocid+'"]');
         card.querySelector('.char_stat > .list[data-type="main"]').classList.toggle('dpn');
@@ -472,12 +481,317 @@
               </div>
             `;
 
-            card.querySelector('.char_unionraider').insertAdjacentHTML('beforeend', html);
-            card.querySelector('.char_unionraider').classList.remove('dpn');
+          card.querySelector('.char_unionraider').insertAdjacentHTML('beforeend', html);
+          card.querySelector('.char_unionraider').classList.remove('dpn');
         })
         .catch((error) => console.log(error))
       }
 
+      // 장착 장비 정보
+      let fn_getEquipment = function(ocid){
+        // 데이터 조회했으면 더 이상 조회 X
+        if(!ocid){
+          ocid = current_ocid;
+        }
+        if(document.querySelector('div[data-ocid="'+ocid+'"] .char_equipment').getInnerHTML() != ''){
+          return false;
+        }
+
+        fn_mapleApi('/maplestory/v1/character/item-equipment', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {          
+          console.log(data)
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+
+          let equipment_list = data.item_equipment;
+          let html = '';
+          equipment_list.forEach((item) => {
+            //console.log(item)
+            html += `
+              <div onclick="fn_getEquipmentDetail(this);" data-slot="${item.item_equipment_slot}">
+                <span>${item.item_equipment_slot}</span>
+                <span title="${item.item_description != null ? ` ${item.item_description}` : ``}">
+                  <img src="${item.item_icon}">${item.item_name}
+                </span>
+                
+                ${item.item_equipment_slot != '뱃지'
+                  && item.item_equipment_slot != '훈장'
+                  ? `
+                    <i class="fas fa-angle-down"></i>
+                  `
+                  : ``
+                }
+              </div>
+              <div class="equip-detail dpn">
+
+                ${item.item_equipment_slot != '뱃지'
+                  && item.item_equipment_slot != '훈장'
+                  && item.item_equipment_slot != '엠블렘'
+                  && item.item_equipment_slot != '포켓 아이템'
+                  ? `
+                  <div>
+                    <span>업그레이드 횟수</span>
+                    <span>+ ${item.scroll_upgrade}</span>
+                  </div>
+
+                  <!--
+                  <div>
+                    <span>황금 망치 재련 적용</span>
+                    <span>${item.golden_hammer_flag == '1' ? `적용` : `미적용`}</span>
+                  </div>
+                  -->
+
+                  <div>
+                    <span>스타포스</span>
+                    <span>${item.starforce}</span>
+                  </div>
+
+                  ${item.starforce != '0'
+                    ? `
+                    <div>
+                      <span>스타포스 옵션</span>
+                      ${item.item_starforce_option.attack_power != '0'
+                      ? `<span>공격력 : + ${item.item_starforce_option.attack_power}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.magic_power != '0'
+                      ? `<span>마력 : + ${item.item_starforce_option.magic_power}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.str != '0'
+                      ? `<span>STR : + ${item.item_starforce_option.str}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.dex != '0'
+                      ? `<span>DEX : + ${item.item_starforce_option.dex}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.int != '0'
+                      ? `<span>INT : + ${item.item_starforce_option.int}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.luk != '0'
+                      ? `<span>LUK : + ${item.item_starforce_option.luk}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.max_hp != '0'
+                      ? `<span>MAX HP : + ${item.item_starforce_option.max_hp}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.max_mp != '0'
+                      ? `<span>MAX MP : + ${item.item_starforce_option.max_mp}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.armor != '0'
+                      ? `<span>방어력 : + ${item.item_starforce_option.armor}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.speed != '0'
+                      ? `<span>이동속도 : + ${item.item_starforce_option.speed}</span>`
+                      : ``
+                    }
+                    ${item.item_starforce_option.jump != '0'
+                      ? `<span>점프력 : + ${item.item_starforce_option.jump}</span>`
+                      : ``
+                    }
+                    </div>
+                    `
+                    : ``
+                  }
+
+                  `
+                  : ``
+                }
+
+                ${item.item_equipment_part != '반지'
+                  && item.item_equipment_slot != '어깨장식'
+                  && item.item_equipment_slot != '보조무기'
+                  && item.item_equipment_slot != '뱃지'
+                  && item.item_equipment_slot != '훈장'
+                  && item.item_equipment_slot != '엠블렘'
+                  ? `
+                  <div>
+                    <span>추옵</span>
+                    ${item.item_add_option.attack_power != '0'
+                      ? `<span>공격력 : + ${item.item_add_option.attack_power}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.magic_power != '0'
+                      ? `<span>마력 : + ${item.item_add_option.magic_power}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.damage != '0'
+                      ? `<span>데미지 : + ${item.item_add_option.damage}%</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.boss_damage != '0'
+                      ? `<span>보스공격력 데미지 : + ${item.item_add_option.boss_damage}%</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.str != '0'
+                      ? `<span>STR : + ${item.item_add_option.str}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.dex != '0'
+                      ? `<span>DEX : + ${item.item_add_option.dex}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.int != '0'
+                      ? `<span>INT : + ${item.item_add_option.int}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.luk != '0'
+                      ? `<span>LUK : + ${item.item_add_option.luk}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.all_stat != '0'
+                      ? `<span>올스탯 : + ${item.item_add_option.all_stat}%</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.max_hp != '0'
+                      ? `<span>MAX HP : + ${item.item_add_option.max_hp}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.max_mp != '0'
+                      ? `<span>MAX MP : + ${item.item_add_option.max_mp}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.armor != '0'
+                      ? `<span>방어력 : + ${item.item_add_option.armor}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.speed != '0'
+                      ? `<span>이동속도 : + ${item.item_add_option.speed}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.jump != '0'
+                      ? `<span>점프력 : + ${item.item_add_option.jump}</span>`
+                      : ``
+                    }
+                    ${item.item_add_option.equipment_level_decrease != '0'
+                      ? `<span>착용 레벨 감소 : -${item.item_add_option.equipment_level_decrease}</span>`
+                      : ``
+                    }
+                  </div>
+                  `
+                  : ``
+                }
+
+                ${item.item_equipment_slot != '포켓 아이템'
+                  && item.item_equipment_slot != '훈장'
+                  && item.item_equipment_slot != '뱃지'
+                  ? `
+                  <div>
+                    <span>잠재능력 | ${item.potential_option_grade}</span>
+                    <span>${item.potential_option_1}</span>
+                    <span>${item.potential_option_2}</span>
+                    <span>${item.potential_option_3}</span>
+                  </div>
+
+                  <div>
+                    <span>에디셔널 잠재능력 | ${item.additional_potential_option_grade}</span>
+                    <span>${item.additional_potential_option_1}</span>
+                    <span>${item.additional_potential_option_2}</span>
+                    <span>${item.additional_potential_option_3}</span>
+                  </div>
+                  `
+                  : ``
+                }
+
+                ${item.soul_name != null && item.soul_name != 'null' && item.soul_name != ''
+                  ? `
+                  <div>
+                    <span>소울 효과</span>
+                    <span>${item.soul_name}</span>
+                    <span>${item.soul_option}</span>                    
+                  </div>` 
+                  : ``
+                }
+
+                ${item.cuttable_count != '255'
+                  ? `
+                  <div>
+                    <span>가위 사용 가능 횟수</span>
+                    <span>${item.cuttable_count}</span>
+                  </div>` 
+                  : ``
+                }
+
+              </div>
+            `;
+          });
+
+          // 칭호
+          html += `
+            <div>
+              <span>칭호</span>
+              <span title="${data.title.title_description != null ? ` ${data.title.title_description}` : ``}">
+                <img src="${data.title.title_icon}">${data.title.title_name}
+              </span>
+            </div>
+          `;
+
+          card.querySelector('.char_equipment').insertAdjacentHTML('beforeend', html);
+          card.querySelector('.char_equipment').classList.remove('dpn');
+        })
+        .catch((error) => console.log(error))
+      }
+
+      // 장착 장비 정보
+      let fn_getEquipmentDetail = function(obj){
+        
+        if(!obj.querySelector('i')) {
+            return false;
+        }
+
+        let next = obj.nextElementSibling;
+        if(next.classList.contains('dpn')){
+          obj.querySelector('i').classList.add('fa-angle-up');
+          obj.querySelector('i').classList.remove('fa-angle-down');
+          next.classList.remove('dpn');
+        } else {
+          obj.querySelector('i').classList.add('fa-angle-down');
+          obj.querySelector('i').classList.remove('fa-angle-up');
+          next.classList.add('dpn');
+        }
+      }
+
+      // 장착 캐시장비 정보
+      let fn_getCacheItem = function(ocid){
+        // 데이터 조회했으면 더 이상 조회 X
+        if(!ocid){
+          ocid = current_ocid;
+        }
+        if(document.querySelector('div[data-ocid="'+ocid+'"] .char_cache_item').getInnerHTML() != ''){
+          return false;
+        }
+
+        fn_mapleApi('/maplestory/v1/character/cashitem-equipment', 'date='+_date+'&ocid='+ocid)
+        .then((data) => {
+          //console.log(data);
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          // 현재 프리셋 번호
+          let preset_no = data.preset_no;
+          if(data['cash_item_equipment_preset_'+preset_no] != null){
+            let cache_list = data['cash_item_equipment_preset_'+preset_no];
+            let html = '';
+            cache_list.forEach((item) => {
+              //console.log(item)
+              html += `
+                <div>
+                  <span>${item.cash_item_equipment_slot}</span>
+                  <span title="${item.cash_item_description != null ? ` ${item.cash_item_description}` : ``}">
+                    <img src="${item.cash_item_icon}">${item.cash_item_name}
+                  </span>
+                </div>
+              `;
+            });
+
+            card.querySelector('.char_cache_item').insertAdjacentHTML('beforeend', html);
+            card.querySelector('.char_cache_item').classList.remove('dpn');
+          }
+        })
+        .catch((error) => console.log(error))
+      }
       
 
 
