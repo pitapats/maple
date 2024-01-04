@@ -1,0 +1,284 @@
+classInfo = [
+	{
+		classType: '전사'
+		,classTribe: '모험가'
+		,className: '히어로'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FFJjbm%2Fbtsp64czBZH%2Ft0lsK7PjAjMOoqH8qTRKs1%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '모험가'
+		,className: '팔라딘'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fq9njT%2Fbtsp7BOKpgt%2Fu2Kt1ao0Xbprq66kfqJnxk%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '모험가'
+		,className: '다크나이트'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcJZDNl%2Fbtsp2jg078R%2F26cMg9EouMiUpb4RR3Oku1%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '모험가'
+		,className: '히어로'
+		,imgUrl: ''
+	}
+	,{
+		classType: '전사'
+		,classTribe: '시그너스 기사단'
+		,className: '소울마스터'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FsJCET%2Fbtsp7JFRrsF%2FGIUUy1xyEtkFj9viU9TIOK%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '시그너스 기사단'
+		,className: '미하일'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fo7ifA%2Fbtsp635KbzU%2F89kra6KMjD98aSn27QY8zK%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '레지스탕스'
+		,className: '블래스터'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcclFGz%2Fbtsp35isYvl%2FiHN7YkA1STwLi1Ga1fihY0%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '데몬'
+		,className: '데몬 슬레이어'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F8uHOL%2Fbtsp9YCgVKJ%2F6b2MgnDKvdfch8dgjxcNvK%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '데몬'
+		,className: '데몬 어벤져'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F06B7S%2Fbtsp7IAaIjv%2FkSglc0igTVrTZUYVQ9GGQ0%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '영웅'
+		,className: '아란'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F6gdHU%2Fbtsp7JlyqcW%2F8HhuDddUH86aKXdTtcEmO1%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '노바'
+		,className: '카이저'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbl2fhx%2Fbtsp6rMuNug%2FY6skkvAT9fpq2FFZmOkGC1%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '레프'
+		,className: '아델'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fds9dxy%2Fbtsp7TVUJXQ%2FR0iOpt8W5RRbYJHrJljbvk%2Fimg.jpg'
+	}
+	,{
+		classType: '전사'
+		,classTribe: '초월자'
+		,className: '제로'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbfg9C9%2Fbtsp2bi6q4T%2FKdHYn6X26GolIGY4hxs9Wk%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '모험가'
+		,className: '아크메이지(불,독)'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fxm5tJ%2Fbtsp7BBazen%2FTvVoHRFtbaF7oiq5MSGWWk%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '모험가'
+		,className: '아크메이지(썬,콜)'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbmN0sr%2Fbtsp8WSe8Xe%2FaiUkMialT0bLBtE8EeuRX0%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '모험가'
+		,className: '비숍'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbWEFuv%2Fbtsp90z5zAI%2FNEVlYidPSDCh8x16lIWMi0%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '시그너스 기사단'
+		,className: '플레임위자드'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fk9t9p%2Fbtsp63dCLl1%2FKuhlyidsrFI7XmxTgKveM1%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '레지스탕스'
+		,className: '배틀메이지'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvA9FD%2Fbtsp8b9YBbl%2FPRa9qVNkkQ89Iv8it68x7K%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '영웅'
+		,className: '에반'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FR71YQ%2Fbtsp3mdEhVR%2F3KfnKkrCGTBRlsgtH3zmd0%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '영웅'
+		,className: '루미너스'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbiuUdq%2Fbtsp1jBEJ4c%2FkGhiFu4hlq22nA0xMawxp0%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '레프'
+		,className: '일리움'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcpeVwk%2Fbtsp91Tiftm%2FrK4TyaWzURYi9VkH86LHPk%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '아니마'
+		,className: '라라'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F1kcr0%2Fbtsp7IGWRiu%2Fo5VEqAXzCRvTF1RKJgweI1%2Fimg.jpg'
+	}
+	,{
+		classType: '마법사'
+		,classTribe: '초능력자'
+		,className: '키네시스'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEX9mb%2Fbtsp7INK4Qr%2FE5QXdNnnAgdc6OczeKP4Jk%2Fimg.jpg'
+	}
+	,{
+		classType: '궁수'
+		,classTribe: '모험가'
+		,className: '보우마스터'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FMHzUV%2Fbtsp1e73lz7%2Ff2X1roID2hSrkZWq5qqwEK%2Fimg.jpg'
+	}
+	,{
+		classType: '궁수'
+		,classTribe: '모험가'
+		,className: '신궁'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkZ6Ga%2Fbtsp63ko7B2%2Fsw57foD2X1aW0YMnF6yyHk%2Fimg.jpg'
+	}
+	,{
+		classType: '궁수'
+		,classTribe: '모험가'
+		,className: '패스파인더'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbOvb9n%2Fbtsp7T9pukr%2F3XuSdbDyZZhqBIhL4tNMD0%2Fimg.jpg'
+	}
+	,{
+		classType: '궁수'
+		,classTribe: '시그너스 기사단'
+		,className: '윈드브레이커'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZsrZ8%2Fbtsp63SefW6%2FEKvcupck1iW6xPE3ZqTaK1%2Fimg.jpg'
+	}
+	,{
+		classType: '궁수'
+		,classTribe: '레지스탕스'
+		,className: '와일드헌터'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpTL9Q%2Fbtsp35pkEw4%2Fd6mtvZWBEG8y0UF1jkTRK1%2Fimg.jpg'
+	}
+	,{
+		classType: '궁수'
+		,classTribe: '영웅'
+		,className: '메르세데스'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbWfa63%2Fbtsp63LygkZ%2Fo5zjsjhGzxE8KTqXHRabWk%2Fimg.jpg'
+	}
+	,{
+		classType: '궁수'
+		,classTribe: '노바'
+		,className: '카인'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc45uBj%2Fbtsp8Au0Rm1%2FXT1KAgb3pfzVbR7eRYMuK0%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '모험가'
+		,className: '나이트로드'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbDP3fw%2Fbtsp7AoMmi4%2FO2hn7LVObQxMJ1V5GNbb51%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '모험가'
+		,className: '섀도우'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcJRo0K%2Fbtsp9ZOH7jo%2FDGaC2VrrMza8ZoBvG7GZH1%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '모험가'
+		,className: '듀얼블레이더'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcbArHx%2Fbtsp6qz1OFg%2FDZFfIFbKDHzyrOJrIKNqNK%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '시그너스 기사단'
+		,className: '나이트워커'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fqf9eR%2Fbtsp35v3ggl%2FJtp0kEOtGWX7AObpKvhkGk%2Fimg.jpg'
+	}
+	,{
+		classType: '도적/해적'
+		,classTribe: '레지스탕스'
+		,className: '제논'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBBjWS%2Fbtsp7KxYVFx%2FQHU4UCXvMuhUIMLWe5jPkK%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '영웅'
+		,className: '팬텀'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdgvqXb%2Fbtsp90z5HbB%2FtuXzorZR5pR8irzLkHhdW0%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '노바'
+		,className: '카데나'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbFZD6e%2Fbtsp8ABMkjc%2FnbdSdS1CJHT5E39q2uN6t1%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '레프'
+		,className: '칼리'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdqrVy0%2Fbtsp8cVmF1k%2FkXFvKzpP0PeV0ptq0BIM7k%2Fimg.jpg'
+	}
+	,{
+		classType: '도적'
+		,classTribe: '아니마'
+		,className: '호영'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbQWmcy%2Fbtsp8YWOVLI%2F9rEQSFvKdOhwBAeOsQOeT0%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '모험가'
+		,className: '바이퍼'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FlvONO%2Fbtsp9qloroE%2FBkzqcaNTZ8BD1NIExwi5l1%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '모험가'
+		,className: '캡틴'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F7lXM9%2Fbtsp2axIROg%2FjFFdBrwYwekSjWZpij41nK%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '모험가'
+		,className: '캐논슈터'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fdq6tmt%2Fbtsp62Z5NPD%2FQjbyk6mFaS8ZjWxz1GOuMK%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '시그너스 기사단'
+		,className: '스트라이커'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd5cMh9%2Fbtsp7JlyKGx%2F7ej9uehmcSZKN7eEPbM45k%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '레지스탕스'
+		,className: '메카닉'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuT4ko%2Fbtsp7AI05FQ%2Fjz46D6tgHl7hECww6KPXy1%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '영웅'
+		,className: '은월'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbaprTr%2Fbtsp7BBaVBF%2FFQakQE5eSPZi1gf1n3RQrk%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '노바'
+		,className: '엔젤릭버스터'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcVvHKE%2Fbtsp0CnQOnk%2FuwV9vQvKvQl6xEkzRaaMDk%2Fimg.jpg'
+	}
+	,{
+		classType: '해적'
+		,classTribe: '레프'
+		,className: '아크'
+		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbvykRs%2Fbtsp90UoYLS%2F9xSiJd0bDOv854oFZ2j2l0%2Fimg.jpg'
+	}
+]

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/default.css?1" />
     <link rel="stylesheet" href="./css/contents.css?1" />
+    <script type="text/javascript" src="./src/classInfo.json"></script>
   </head>
   <body>
     
@@ -41,6 +42,8 @@
       var dd = String(yesterday.getDate()).padStart(2, '0'); // 날짜를 두 자리로 만들기
       var _date = yyyy + '-' + mm + '-' + dd;
       //console.log(_date);
+
+      const classData = JSON.parse(JSON.stringify(classInfo));
 
       let current_ocid = null;
 
@@ -126,9 +129,20 @@
         fn_mapleApi('/maplestory/v1/character/basic', 'date='+_date+'&ocid='+ocid)
         .then((data) => {
           //console.log(data);
+          let char_class = data.character_class;
+          let char_img = '';
+          for(var i=0; i<classData.length; i++){
+            if(classData[i].className.replaceAll(' ','') == char_class.replaceAll(' ','')){
+              char_img = classData[i].imgUrl;
+              break;
+            }
+          }
+          document.querySelector('body').style.cssText = `background: url(${char_img}) no-repeat; background-size: cover;`;
+          //document.querySelector('.class-image').style.cssText = `background: url(${char_img}) no-repeat; background-size: cover; display: inline-block;`;
+
           let char_html = `
             <div class="char_card" data-ocid="${ocid}">
-              <div class="char_info">                  
+              <div class="char_info">
                 <div class="image">
                   <span class="mark"></span>
                   <img src="${data.character_image}" />
@@ -794,6 +808,7 @@
       }
       
 
+      
 
 
     </script>
