@@ -48,6 +48,7 @@
   width: 100%;
   position: relative;
   margin-top: 25px;
+  margin-bottom: 300px;
 }
 
 .char_info > .image {
@@ -67,8 +68,9 @@
   position: absolute;
   display: inline-block;
   left: 0;
-  bottom: -16px;
-  font-size: 11px;
+  bottom: -22px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .char_info .info {
@@ -306,14 +308,4 @@
   justify-content: center;
   padding-left: 5px;
   box-sizing: border-box;
-}
-
-
-
-/* */
-.class-image {
-  position: absolute;
-  top: 0;
-  width: 300px; /* 이미지의 너비 설정 */
-  height: 500px; /* 이미지의 높이 설정 */    
 }

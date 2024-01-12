@@ -188,7 +188,7 @@ classInfo = [
 	,{
 		classType: '도적'
 		,classTribe: '모험가'
-		,className: '섀도우'
+		,className: '섀도어'
 		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcJRo0K%2Fbtsp9ZOH7jo%2FDGaC2VrrMza8ZoBvG7GZH1%2Fimg.jpg'
 	}
 	,{
@@ -248,7 +248,7 @@ classInfo = [
 	,{
 		classType: '해적'
 		,classTribe: '모험가'
-		,className: '캐논슈터'
+		,className: '캐논마스터'
 		,imgUrl: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fdq6tmt%2Fbtsp62Z5NPD%2FQjbyk6mFaS8ZjWxz1GOuMK%2Fimg.jpg'
 	}
 	,{

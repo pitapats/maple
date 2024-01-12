@@ -137,11 +137,11 @@
               break;
             }
           }
-          document.querySelector('body').style.cssText = `background: url(${char_img}) no-repeat; background-size: cover;`;
+          //document.querySelector('body').style.cssText = `background: url(${char_img}) no-repeat; background-size: cover;`;
           //document.querySelector('.class-image').style.cssText = `background: url(${char_img}) no-repeat; background-size: cover; display: inline-block;`;
 
           let char_html = `
-            <div class="char_card" data-ocid="${ocid}">
+            <div class="char_card" data-ocid="${ocid}" style="background: url(${char_img}) no-repeat; background-size: 100%; background-position: 0 200px;">
               <div class="char_info">
                 <div class="image">
                   <span class="mark"></span>
@@ -326,7 +326,7 @@
             card.querySelector('.char_guild').insertAdjacentHTML('beforeend', html);
 
             document.querySelector('.char_guild_title').classList.remove('dpn');
-            card.querySelector('.char_guild_title').click();
+            //card.querySelector('.char_guild_title').click();
           })
           .catch((error) => console.log(error))
         })
