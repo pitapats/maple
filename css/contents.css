@@ -100,8 +100,8 @@
   font-weight: 700;
   text-align: left;
   margin-top: 20px;
-  border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid #333333;
+  border-bottom: 1px solid #333333;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -109,6 +109,7 @@
   cursor: pointer;
   padding: 0 10px;
   box-sizing: border-box;
+  box-shadow: 0 1px 5px rgba(255,255,255,0.5);
 }
 .sub_menu {
   width: 100%;
