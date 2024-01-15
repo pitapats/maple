@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/default.css?1" />
     <link rel="stylesheet" href="./css/contents.css?1" />
     <script type="text/javascript" src="./src/classInfo.json"></script>
+    <script type="text/javascript" src="./src/serverInfo.json"></script>
   </head>
   <body>
     
@@ -44,6 +45,7 @@
       //console.log(_date);
 
       const classData = JSON.parse(JSON.stringify(classInfo));
+      const serverData = JSON.parse(JSON.stringify(serverInfo));
 
       let current_ocid = null;
 
@@ -137,8 +139,15 @@
               break;
             }
           }
-          //document.querySelector('body').style.cssText = `background: url(${char_img}) no-repeat; background-size: cover;`;
-          //document.querySelector('.class-image').style.cssText = `background: url(${char_img}) no-repeat; background-size: cover; display: inline-block;`;
+
+          let char_server = data.world_name;
+          let server_img = '';
+          for(var i=0; i<serverData.length; i++){
+            if(char_server.indexOf(serverData[i].serverName) > -1){
+              server_img = serverData[i].imgUrl;
+              break;
+            }
+          }
 
           let char_html = `
             <div class="char_card" data-ocid="${ocid}" style="background: url(${char_img}) no-repeat; background-size: 100%; background-position: 0 200px;">
@@ -149,7 +158,7 @@
                 </div>                  
                 <div class="info">
                   <ul>
-                    <li data-type="char-server">${data.world_name}</li>
+                    <li data-type="char-server"><img src="${server_img}">${data.world_name}</li>
                     <li data-type="char-name">${data.character_name}<span id="char_type"></span></li>
                     <li>${data.character_class} (${data.character_gender})</li>                      
                     <li>Lv.${data.character_level} (${data.character_exp_rate}%)</li>

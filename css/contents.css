@@ -44,7 +44,7 @@
 .char_info {
   display: flex;
   align-items: center;
-  column-gap: 20px;
+  column-gap: 15px;
   width: 100%;
   position: relative;
   margin-top: 25px;
@@ -86,7 +86,11 @@
   position: absolute;
   left: 0;
   top: -22px;
+  font-size: 14px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  column-gap: 3px;
 }
 .char_info ul li[data-type="char-name"] {
   font-weight: 800;

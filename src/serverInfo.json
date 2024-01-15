@@ -1,0 +1,58 @@
+serverInfo = [
+	{
+		serverName: '스카니아'
+		,imgUrl: 'https://i.namu.wiki/i/hTgaiyfNPDzADiGuWVR96G1wa8jaMBs6MHeiDMMofGVT2BUah43ns8h63NDTX16MXZAIuswCIpCFc7xW3B_pHA.webp'
+	},
+	{
+		serverName: '베라'
+		,imgUrl: 'https://i.namu.wiki/i/JTZzBED5hKx4jmPCPtFA245WaHi3flHMltRrnkWKmI75eOwfcjv43lI2jvFWq1ytI9CqIrLo-ayvtB-xznBlVg.webp'
+	},
+	{
+		serverName: '루나'
+		,imgUrl: 'https://i.namu.wiki/i/HOWAM4TWkRAMN35IcGg8VGb5aIuHQTdpE2HBcddl0_6cswT4NVehS6gBX7Z4X7SIp8_lXThT4fIqks6Xga5K4g.png'
+	},
+	{
+		serverName: '제니스'
+		,imgUrl: 'https://i.namu.wiki/i/uEzMw3gSyYCAQ89vEJmpIYdvhVBdv3SvL7l2ZCrq1lB-b3dVNsQ-JwxsOeyLu0G936gbwXFS6-Q1UC_C_rIt-g.png'
+	},
+	{
+		serverName: '크로아'
+		,imgUrl: 'https://i.namu.wiki/i/11eL50wWxCqi_g3BJwLCXG4h4Z-ptrHXYeYa5B2ZtOjMp-NRHQp_esacPE-dAQS6zoPPitoys6vwQwDZTTrrwA.png'
+	},
+	{
+		serverName: '유니온'
+		,imgUrl: 'https://i.namu.wiki/i/d74IMnVwanvzJO5q9lfmEImhS8VvzswevEZmWgm7WOn75PdiEWt9tOdzQi4ONDLN6bizS7R46fJRoz5usRF8pw.png'
+	},
+	{
+		serverName: '엘리시움'
+		,imgUrl: 'https://i.namu.wiki/i/qMYpJ5clrJdMUEWvet9LRaSK-mcrWQVubV2S8U54ofQGHPL9JKS5bu2fV9Z83CPrGqnLD-e2sGhWHqoAVJzl9Q.png'
+	},
+	{
+		serverName: '이노시스'
+		,imgUrl: 'https://i.namu.wiki/i/uEDXa3quDjm1UdUmdbBm_k5K71ujN6BmfStq9uzqChVpa5Jc-OKPdKLQ1jFgB1ICxrqng-PNVttZ8GM9gJlHqg.png'
+	},
+	{
+		serverName: '레드'
+		,imgUrl: 'https://i.namu.wiki/i/MpP_nnSfhkny9oQC1xIZGa7wPYGDs5yPrp3m65cyUOXYxYiv1ASTixiyu5ZSBIV3Hm1hUlsdlCCnrA5oC6EGOw.png'
+	},
+	{
+		serverName: '오로라'
+		,imgUrl: 'https://i.namu.wiki/i/onJO_xBIQ10Q0HJhc3mHL_7ih8qfWk2JN2StT4Delm7kHXaG_5hMSQdf4-95yPV7-aIitC3YLsBbbnY82inM9Q.webp'
+	},
+	{
+		serverName: '아케인'
+		,imgUrl: 'https://i.namu.wiki/i/i7lw3J1Amteqz1qOVdUdkx769J39mDeZyYlhFiksWGdkhiKMfa752W9VAl15RMEh8Wz0AsnT87bXcRywz0a3ng.png'
+	},
+	{
+		serverName: '노바'
+		,imgUrl: 'https://i.namu.wiki/i/XU_-tnRZZg5M1J03ca7jCO5bA5lcOe2lxHgHt0VPMMTtENPyIpocHr3Cd7exs2sDRT-JMiElj1ziHOJTt1Yy1Q.png'
+	},
+	{
+		serverName: '리부트'
+		,imgUrl: 'https://i.namu.wiki/i/XVhtt_TKCFdGfaKJ-_H5OLprwCc8cYZSB59RtHWjmF3badHxB3WXjdeovXkJ1EsmOaMfZo5GAKrZQNhFUO_qYg.webp'
+	},
+	{
+		serverName: '버닝'
+		,imgUrl: 'https://i.namu.wiki/i/g_lQdsH9wnTb1tHcaZw_lyTWA5QHM0kAMMkXiF6itcLD9ZvBwr2KkjCdx_fBWn_mugyjJOz5leoQtTaWiERLbg.png'
+	},
+]
