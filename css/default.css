@@ -12,6 +12,8 @@ body {
   width: auto;
   height: auto;    
   box-sizing: border-box;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 input {

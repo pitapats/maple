@@ -27,6 +27,16 @@
       <button onclick="fn_search();"><i class="fas fa-search"></i></button>
     </div>
 
+    <div class="char-wrap">
+
+
+
+    </div>
+
+
+
+
+
     <div class="wrap">
       <div class="card-wrap">
         
@@ -59,6 +69,8 @@
           // real
           apiKey = 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6';
         }
+
+        apiKey = 'live_9c0da748b4d6c40ab3b3d3258710357e8fac6573e6cc76cd91db553e0f9a320f45f81a5b3146a2d2bff59f3beec92fa6';
         
         let requestUrl = apiUrl + '?' + queryString;
         let response = await fetch(requestUrl, {
@@ -132,6 +144,10 @@
         fn_mapleApi('/maplestory/v1/character/basic', 'date='+_date+'&ocid='+ocid)
         .then((data) => {
           //console.log(data);
+
+          // ocid 등록
+          document.querySelector('.char-wrap').setAttribute('data-ocid', ocid);
+
           let char_class = data.character_class;
           let char_img = '';
           for(var i=0; i<classData.length; i++){
@@ -151,47 +167,46 @@
           }
 
           let char_html = `
-            <img src="${char_img}" style="width: 100%;">
-            <div class="char_card" data-ocid="${ocid}">
-              <div class="char_info">
-                <div class="image">
-                  <span class="mark"></span>
-                  <img src="${data.character_image}" />
-                </div>                  
-                <div class="info">
-                  <ul>
-                    <li data-type="char-server"><img src="${server_img}">${data.world_name}</li>
-                    <li data-type="char-name">${data.character_name}<span id="char_type"></span></li>
-                    <li>${data.character_class} (${data.character_gender})</li>                      
-                    <li>Lv.${data.character_level} (${data.character_exp_rate}%)</li>
-                    <li data-type="char-union"></li>
-                    <li data-type="char-popular"></li>
-                    <li data-type="char-dojang"></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="sub_title char_guild_title" onclick="fn_menuToggle(this);">길드 정보<i class="fas fa-angle-down"></i></div>
-              <div class="sub_menu char_guild dpn"></div>
-
-              <div class="sub_title" onclick="fn_getStat(); fn_menuToggle(this);">스탯<i class="fas fa-angle-down"></i></div>
-              <div class="sub_menu char_stat dpn"></div>
-              
-              <div class="sub_title" onclick="fn_getAbility(); fn_menuToggle(this);">어빌리티<i class="fas fa-angle-down"></i></div>
-              <div class="sub_menu char_ability dpn"></div>
-
-              <div class="sub_title" onclick="fn_getUnionraider(); fn_menuToggle(this);">유니온 공격대<i class="fas fa-angle-down"></i></div>
-              <div class="sub_menu char_unionraider dpn"></div>
-
-              <div class="sub_title" onclick="fn_getEquipment(); fn_menuToggle(this);">장착 중인 장비<i class="fas fa-angle-down"></i></div>
-              <div class="sub_menu char_equipment dpn"></div>
-
-              <div class="sub_title" onclick="fn_getCacheItem(); fn_menuToggle(this);">장착 중인 캐시 장비<i class="fas fa-angle-down"></i></div>
-              <div class="sub_menu char_cache_item dpn"></div>
-              
+            <div class="char-image">
+              <img src="${data.character_image}" />
             </div>
-          `;
-          document.querySelector('.card-wrap').innerHTML = char_html;
+
+            <div class="char-name">
+              ${data.character_name}<em></em>
+            </div>
+
+            <div class="char-info1">
+              <span><img src="${server_img}">${data.world_name}</span>
+              <span>${data.character_class} (${data.character_gender})</span>
+              <span>Lv.${data.character_level} (${data.character_exp_rate}%)</span>
+            </div>
+
+            <div class="char-info2">
+              <span data-type="char-union"></span>
+              <span data-type="char-popular"></span>
+              <span data-type="char-dojang"></span>
+            </div>
+
+            <div class="sub_title char_guild_title" onclick="fn_menuToggle(this);">길드 정보<i class="fas fa-angle-down fa-lg"></i></div>
+            <div class="sub_menu char_guild dpn"></div>
+
+            <div class="sub_title" onclick="fn_getStat(); fn_menuToggle(this);">스탯<i class="fas fa-angle-down fa-lg"></i></div>
+            <div class="sub_menu char_stat dpn"></div>
+            
+            <div class="sub_title" onclick="fn_getAbility(); fn_menuToggle(this);">어빌리티<i class="fas fa-angle-down fa-lg"></i></div>
+            <div class="sub_menu char_ability dpn"></div>
+
+            <div class="sub_title" onclick="fn_getUnionraider(); fn_menuToggle(this);">유니온 공격대<i class="fas fa-angle-down fa-lg"></i></div>
+            <div class="sub_menu char_unionraider dpn"></div>
+
+            <div class="sub_title" onclick="fn_getEquipment(); fn_menuToggle(this);">장착 중인 장비<i class="fas fa-angle-down fa-lg"></i></div>
+            <div class="sub_menu char_equipment dpn"></div>
+
+            <div class="sub_title" onclick="fn_getCacheItem(); fn_menuToggle(this);">장착 중인 캐시 장비<i class="fas fa-angle-down fa-lg"></i></div>
+            <div class="sub_menu char_cache_item dpn"></div>
+
+          `;          
+          document.querySelector('.char-wrap').innerHTML = char_html;
 
           // 현재 캐릭터의 길드 조회
           if(data.character_guild_name){
@@ -214,11 +229,10 @@
             //console.log(card)
             if(character_name == data.ranking[0].character_name){
               //document.querySelector('.char_info > .image > .mark').textContent = '본캐';
-              card.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(본캐)</span>`);
-              char_type
+              card.querySelector('.char-name em').innerHTML = `본캐`;
             } else {
-              card.querySelector('li[data-type="char-name"]').insertAdjacentHTML('beforeend', `<span>(부캐)</span>`);
-              card.querySelector('.char_info > .image > .mark').textContent = '본캐 : ' + data.ranking[0].character_name;
+              card.querySelector('.char-name em').innerHTML = `부캐 (본캐 : ${data.ranking[0].character_name})`;
+              //<div>본캐 : ${data.ranking[0].character_name}</div>
             }
           } else {
             //
@@ -235,7 +249,7 @@
           const card = document.querySelector('div[data-ocid="'+ocid+'"]');
           //let union_html = `<li>유니온 ${data.union_level}</li>`;
           //card.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', union_html);
-          card.querySelector('li[data-type="char-union"]').textContent = `유니온 ${data.union_level}`;
+          card.querySelector('span[data-type="char-union"]').textContent = `유니온 ${data.union_level}`;
         })
         .catch((error) => console.log(error))
       }
@@ -248,7 +262,7 @@
           const card = document.querySelector('div[data-ocid="'+ocid+'"]');
           //let popularity_html = `<li>인기도 ${data.popularity}</li>`;
           //card.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', popularity_html);
-          card.querySelector('li[data-type="char-popular"]').textContent = `인기도 ${data.popularity}`;
+          card.querySelector('span[data-type="char-popular"]').textContent = `인기도 ${data.popularity}`;
         })
         .catch((error) => console.log(error))
       }
@@ -261,7 +275,7 @@
           const card = document.querySelector('div[data-ocid="'+ocid+'"]');
           //let dojang_html = `<li>무릉도장 ${data.dojang_best_floor}층</li>`; // date_dojang_record
           //card.querySelector('.char_info > .info ul').insertAdjacentHTML('beforeend', dojang_html);
-          card.querySelector('li[data-type="char-dojang"]').textContent = `무릉도장 ${data.dojang_best_floor}층`;
+          card.querySelector('span[data-type="char-dojang"]').textContent = `무릉도장 ${data.dojang_best_floor}층`;
         })
         .catch((error) => console.log(error))
       }
@@ -327,9 +341,7 @@
                 </div>
                 ${skill_html != '' 
                 ? `<div class="guild_sub_title">노블 스킬</div>
-                   <div class="guild_nobless_skill">
-                     ${skill_html}
-                   </div>
+                    <div class="guild_nobless_skill">${skill_html}</div>
                   `: `` }
               </div>
             `;
