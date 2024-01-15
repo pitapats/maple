@@ -1,11 +1,47 @@
-.wrap {
+.top {
+  width: 100%;
+  height: 250px;
+  background: url('https://i.namu.wiki/i/yNeyT0MejUX1kHwlhAYLXBRclBx1JKIvM3w6hOpPzzQ0GYXyCn5pvwVO1ccIQovnWLzDjXTxKLMAitODN8jrAw.gif') no-repeat;  
+  /* background-position: -50px -50px; */
+  /* background-position: center -50px; */
+  background-size: 100% 100%;
+}
+
+.remk {  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  background-color: #000000;
+  color: #ffffff;
+  padding-top: 10px;
+}
+
+.input-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 5px;
+  padding: 10px 20px;
+  background-color: #000000;
+}
+.input-wrap input {
+  flex: 1;
+}
+
+.wrap {  
   width: 100%;
   height: 100%;
+  max-width: 330px;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   margin: auto;
   box-sizing: border-box;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 .wrap > div {
   display: flex;
@@ -14,12 +50,7 @@
   width: 100%;
   box-sizing: border-box;
 }
-.input-wrap {
-  column-gap: 5px;
-}
-.input-wrap input {
-  flex: 1;
-}
+
 .card-wrap {
   flex-direction: column;
   row-gap: 10px;;
@@ -48,14 +79,14 @@
   width: 100%;
   position: relative;
   margin-top: 25px;
-  margin-bottom: 300px;
+  margin-bottom: 20px;
 }
 
 .char_info > .image {
   position: relative;
-  width: 120px;
-  height: 120px;
-  min-width: 120px;
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
   border: 1px solid #cecece;
   border-radius: 5px;
   box-sizing: border-box;

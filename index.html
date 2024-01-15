@@ -14,22 +14,23 @@
   </head>
   <body>
     
-    <div class="wrap">
+    <div class="top"></div>
 
-      <div class="remk">
-        23.12.21 이후 접속 기록이 있어야 정상 조회 가능 <br/>
-        조회 캐릭 랭킹 정산 이후 본캐/부캐 확인 가능
-      </div>
-      
-      <div class="input-wrap">
-        <input type="text" id="char_name_input" value="시삐" onkeyup="enter();">
-        <button onclick="fn_search();"><i class="fas fa-search"></i></button>
-      </div>
-      
+    <div class="remk">
+      * 모바일 특화 버전으로 개발되었습니다. <br/>
+      * 23.12.21 이후 접속 기록이 있어야 정상 조회 가능합니다. <br/>
+      * 캐릭터 정보 갱신 시간은 01:00 입니다.
+    </div>
+
+    <div class="input-wrap">
+      <input type="text" id="char_name_input" value="" onkeyup="enter();">
+      <button onclick="fn_search();"><i class="fas fa-search"></i></button>
+    </div>
+
+    <div class="wrap">
       <div class="card-wrap">
         
       </div>
-
     </div>
     
 
@@ -120,7 +121,7 @@
           alert('23.12.21 이후 접속 정보 없음');
         });
       }
-      fn_search();
+      // fn_search();
 
       function reset(){
         document.querySelector('.card-wrap').innerHTML = ``;
@@ -150,7 +151,8 @@
           }
 
           let char_html = `
-            <div class="char_card" data-ocid="${ocid}" style="background: url(${char_img}) no-repeat; background-size: 100%; background-position: 0 200px;">
+            <img src="${char_img}" style="width: 100%;">
+            <div class="char_card" data-ocid="${ocid}">
               <div class="char_info">
                 <div class="image">
                   <span class="mark"></span>
