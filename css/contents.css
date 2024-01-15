@@ -53,9 +53,9 @@
 
 .char_info > .image {
   position: relative;
-  width: 100px;
-  height: 100px;
-  min-width: 100px;
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
   border: 1px solid #cecece;
   border-radius: 5px;
   box-sizing: border-box;
@@ -99,6 +99,12 @@
   font-size: 12px;
   font-weight: 500;
   margin-left: 3px;
+}
+
+li[data-type="char-union"],
+li[data-type="char-popular"],
+li[data-type="char-dojang"] {
+  font-size: 12px;
 }
 
 .sub_title {
