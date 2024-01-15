@@ -30,6 +30,10 @@
     <div class="char-wrap">
     </div>
 
+    <div class="top-btn" onclick="document.body.scrollTop = 0; document.documentElement.scrollTop = 0;">
+      <i class="fas fa-arrow-up fa-lg"></i>
+    </div>
+
     <script>
       // 조회용 날짜 세팅 (default: 1일전)
       var today = new Date();
@@ -181,6 +185,32 @@
             
             <div class="sub_title" onclick="fn_getAbility(); fn_menuToggle(this);">어빌리티<i class="fas fa-angle-down fa-lg"></i></div>
             <div class="sub_menu char_ability dpn"></div>
+
+            <div class="sub_title" onclick="fn_menuToggle(this);">스킬<i class="fas fa-angle-down fa-lg"></i></div>
+            <div class="sub_menu char_skill dpn">
+              <div class="skill_chasu" onclick="fn_getSkill('', '0', this);">0차 스킬</div>
+              <div class="skill_list dpn"></div>
+              <div class="skill_chasu" onclick="fn_getSkill('', '1', this);">1차 스킬</div>
+              <div class="skill_list dpn"></div>
+              <!--<div class="skill_chasu" onclick="fn_getSkill('', '1.5', this);">1.5차 스킬</div>-->
+              <!--<div class="skill_list dpn"></div>-->
+              <div class="skill_chasu" onclick="fn_getSkill('', '2', this);">2차 스킬</div>
+              <div class="skill_list dpn"></div>
+              <!--<div class="skill_chasu" onclick="fn_getSkill('', '2.5', this);">2.5차 스킬</div>-->
+              <!--<div class="skill_list dpn"></div>-->
+              <div class="skill_chasu" onclick="fn_getSkill('', '3', this);">3차 스킬</div>
+              <div class="skill_list dpn"></div>
+              <div class="skill_chasu" onclick="fn_getSkill('', '4', this);">4차 스킬</div>
+              <div class="skill_list dpn"></div>
+              <div class="skill_chasu" onclick="fn_getSkill('', 'hyperpassive', this);">하이퍼 패시브 스킬</div>
+              <div class="skill_list dpn"></div>
+              <div class="skill_chasu" onclick="fn_getSkill('', 'hyperactive', this);">하이퍼 액티브 스킬</div>
+              <div class="skill_list dpn"></div>
+              <div class="skill_chasu" onclick="fn_getSkill('', '5', this);">5차 스킬</div>
+              <div class="skill_list dpn"></div>
+              <div class="skill_chasu" onclick="fn_getSkill('', '6', this);">6차 스킬</div>
+              <div class="skill_list dpn"></div>
+            </div>
 
             <div class="sub_title" onclick="fn_getUnionraider(); fn_menuToggle(this);">유니온 공격대<i class="fas fa-angle-down fa-lg"></i></div>
             <div class="sub_menu char_unionraider dpn"></div>
@@ -812,6 +842,90 @@
             card.querySelector('.char_cache_item').insertAdjacentHTML('beforeend', html);
             card.querySelector('.char_cache_item').classList.remove('dpn');
           }
+        })
+        .catch((error) => console.log(error))
+      }
+
+      // 내 스킬 정보
+      let fn_getSkill = function(ocid, num, obj){
+        // 데이터 조회했으면 더 이상 조회 X
+        if(!ocid){
+          ocid = current_ocid;
+        }
+        if(obj.nextElementSibling.classList.contains('dpn')){
+          obj.nextElementSibling.classList.remove('dpn');
+        } else {
+          obj.nextElementSibling.classList.add('dpn');
+        }
+        // if(document.querySelector('div[data-ocid="'+ocid+'"] .char_cache_item').getInnerHTML() != ''){
+        //   return false;
+        // }
+        if(obj.nextElementSibling.getInnerHTML() != ''){
+          return false;
+        }
+
+        /*
+        0: 0차 스킬 및 제로 공용스킬
+        1: 1차 스킬
+        1.5: 1.5차 스킬
+        2: 2차 스킬
+        2.5: 2.5차 스킬
+        3: 3차 스킬
+        4: 4차 스킬 및 제로 알파/베타 스킬
+        hyperpassive: 하이퍼 패시브 스킬
+        hyperactive: 하이퍼 액티브 스킬
+        5: 5차 스킬
+        6: 6차 스킬
+        */
+
+        fn_mapleApi('/maplestory/v1/character/skill', 'date='+_date+'&ocid='+ocid+'&character_skill_grade='+num)
+        .then((data) => {
+          console.log(data);
+          const card = document.querySelector('div[data-ocid="'+ocid+'"]');
+          // 현재 프리셋 번호
+          
+          let skill_list = data.character_skill;
+          let html = '';
+          skill_list.forEach((skill) => {
+            //console.log(item)
+            html += `
+              <div>
+                <div class="skill_img">
+                  <img src="${skill.skill_icon}" />
+                  <span>${skill.skill_name}</span>
+                </div>
+                <div class="skill_info">
+                  <div data-type="skill_level">스킬 레벨 : ${skill.skill_level}</div>
+                  <div data-type="skill_effect">${skill.skill_effect != null ? `${skill.skill_effect}` : ''}</div>
+                  <div data-type="skill_description">${skill.skill_description}</div>                  
+                </div>
+              </div>
+            `;
+          });
+
+          obj.nextElementSibling.innerHTML = html;
+
+          /*
+          let preset_no = data.preset_no;
+          if(data['cash_item_equipment_preset_'+preset_no] != null){
+            let cache_list = data['cash_item_equipment_preset_'+preset_no];
+            let html = '';
+            cache_list.forEach((item) => {
+              //console.log(item)
+              html += `
+                <div>
+                  <span>${item.cash_item_equipment_slot}</span>
+                  <span title="${item.cash_item_description != null ? ` ${item.cash_item_description}` : ``}">
+                    <img src="${item.cash_item_icon}">${item.cash_item_name}
+                  </span>
+                </div>
+              `;
+            });
+
+            card.querySelector('.char_cache_item').insertAdjacentHTML('beforeend', html);
+            card.querySelector('.char_cache_item').classList.remove('dpn');            
+          }
+          */
         })
         .catch((error) => console.log(error))
       }

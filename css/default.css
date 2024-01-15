@@ -8,6 +8,10 @@ ul, ol, li {
   padding: 0;
   margin: 0;
 }
+html {
+  max-width: 350px;
+  margin: auto;
+}
 body { 
   width: auto;
   height: auto;    
