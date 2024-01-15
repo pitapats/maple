@@ -28,21 +28,7 @@
     </div>
 
     <div class="char-wrap">
-
-
-
     </div>
-
-
-
-
-
-    <div class="wrap">
-      <div class="card-wrap">
-        
-      </div>
-    </div>
-    
 
     <script>
       // 조회용 날짜 세팅 (default: 1일전)
@@ -231,7 +217,7 @@
               //document.querySelector('.char_info > .image > .mark').textContent = '본캐';
               card.querySelector('.char-name em').innerHTML = `본캐`;
             } else {
-              card.querySelector('.char-name em').innerHTML = `부캐 (본캐 : ${data.ranking[0].character_name})`;
+              card.querySelector('.char-name em').innerHTML = `본캐 : ${data.ranking[0].character_name}`;
               //<div>본캐 : ${data.ranking[0].character_name}</div>
             }
           } else {
